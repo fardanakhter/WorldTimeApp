@@ -10,6 +10,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Home Screen");
+    return Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/location");
+                  },
+                  icon: const Icon(Icons.edit_location),
+                  label: const Text("edit location")),
+            ],
+          ),
+        ));
   }
 }
