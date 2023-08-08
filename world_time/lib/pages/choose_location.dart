@@ -8,23 +8,43 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
-  getData() async {
+  getDataSynchronously() async {
+    // Runs 2 tasks synchronously (serially)
     String username = await Future.delayed(Duration(seconds: 3), () {
+      print("fetching username....");
       return "fardan";
     });
 
     String bio = await Future.delayed(Duration(seconds: 2), () {
+      print("fetching bio....");
       return 'iOS & Flutter Ninja 🥷🏿';
     });
 
-    print('$username - $bio');
+    print('$username - $bio'); // gets result printed in 3 + 2 secs
+  }
+
+  getDataAsynchronously() async {
+    // Runs 2 tasks asynchronously (parallel)
+    Future<String> username = Future.delayed(Duration(seconds: 3), () {
+      print("fetching username....");
+      return "fardan";
+    });
+
+    Future<String> bio = Future.delayed(Duration(seconds: 2), () {
+      print("fetching bio....");
+      return 'iOS & Flutter Ninja 🥷🏿';
+    });
+
+    await Future.wait([username, bio]);
+    print('$username - $bio'); // gets result printed in 3 secs
   }
 
   @override
   void initState() {
     super.initState();
     print("entered initState()");
-    getData();
+    // getDataSynchronously();
+    getDataAsynchronously();
     print("exiting initState()");
   }
 
