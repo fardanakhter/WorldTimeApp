@@ -8,6 +8,26 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
+  getData() async {
+    String username = await Future.delayed(Duration(seconds: 3), () {
+      return "fardan";
+    });
+
+    String bio = await Future.delayed(Duration(seconds: 2), () {
+      return 'iOS & Flutter Ninja 🥷🏿';
+    });
+
+    print('$username - $bio');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("entered initState()");
+    getData();
+    print("exiting initState()");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
