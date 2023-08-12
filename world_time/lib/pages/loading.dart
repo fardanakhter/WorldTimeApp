@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:world_time/service/world_time_service.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -10,35 +9,36 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  getData() async {
-    var url = Uri.http('worldtimeapi.org', '/api/timezone/Europe/London');
-    Response response = await get(url);
-    Map data = jsonDecode(response.body);
+  bool hasTime = false;
+  String text = "Loading...";
 
-    String dateTimeString = data['utc_datetime'];
-    String offsetString = data['utc_offset'].toString().substring(1, 3);
-    // print('Date String is $dateTimeString');
-    // print('Date Offset String is $offsetString');
-
-    DateTime now = DateTime.parse(dateTimeString);
-    print('UTC date is $now');
-    now = now.add(Duration(hours: int.parse(offsetString)));
-    print('London local date & time is $now');
+  setupWorldTimeService() async {
+    WorldTimeService service =
+        WorldTimeService("Portugal", "portugal.png", "/Europe/Lisbon");
+    await service.getTime();
+    setState(() {
+      hasTime = true;
+      text = service.time.toString();
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    setupWorldTimeService();
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.blue[600],
-      child: const Center(
-          child: Text("Loading...",
-              style: TextStyle(color: Colors.white, fontSize: 18.0))),
+      child: Center(
+          child: Text(text,
+              style: TextStyle(
+                  color: hasTime ? Colors.amber[100] : Colors.white,
+                  fontSize: hasTime ? 18.0 : 22.0,
+                  letterSpacing: hasTime ? 2.0 : 4.0,
+                  fontWeight: FontWeight.w500))),
     );
   }
 }
