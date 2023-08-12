@@ -18,7 +18,9 @@ class _LoadingState extends State<Loading> {
     await service.getTime();
     setState(() {
       hasTime = true;
-      text = service.time.toString();
+      DateTime? fetchedTime = service.time;
+      text =
+          fetchedTime == null ? "Could not fetch time" : fetchedTime.toString();
     });
   }
 
@@ -36,7 +38,7 @@ class _LoadingState extends State<Loading> {
           child: Text(text,
               style: TextStyle(
                   color: hasTime ? Colors.amber[100] : Colors.white,
-                  fontSize: hasTime ? 18.0 : 22.0,
+                  fontSize: 18.0,
                   letterSpacing: hasTime ? 2.0 : 4.0,
                   fontWeight: FontWeight.w500))),
     );
