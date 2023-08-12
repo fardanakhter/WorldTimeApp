@@ -22,6 +22,12 @@ class _LoadingState extends State<Loading> {
       text =
           fetchedTime == null ? "Could not fetch time" : fetchedTime.toString();
     });
+
+    Navigator.pushReplacementNamed(context, "/home", arguments: {
+      "location": service.location,
+      "flag": service.flag,
+      "time": service.time
+    });
   }
 
   @override
