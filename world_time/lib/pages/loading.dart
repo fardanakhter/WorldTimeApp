@@ -11,12 +11,19 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   getData() async {
-    var url = Uri.http('jsonplaceholder.typicode.com', '/todos/1');
+    var url = Uri.http('worldtimeapi.org', '/api/timezone/Europe/London');
     Response response = await get(url);
-    Map map = jsonDecode(response.body);
-    print(map['id']);
-    print(map['title']);
-    print(map['completed']);
+    Map data = jsonDecode(response.body);
+
+    String dateTimeString = data['utc_datetime'];
+    String offsetString = data['utc_offset'].toString().substring(1, 3);
+    // print('Date String is $dateTimeString');
+    // print('Date Offset String is $offsetString');
+
+    DateTime now = DateTime.parse(dateTimeString);
+    print('UTC date is $now');
+    now = now.add(Duration(hours: int.parse(offsetString)));
+    print('London local date & time is $now');
   }
 
   @override
@@ -27,6 +34,11 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Loading Screen");
+    return Material(
+      color: Colors.blue[600],
+      child: const Center(
+          child: Text("Loading...",
+              style: TextStyle(color: Colors.white, fontSize: 18.0))),
+    );
   }
 }
