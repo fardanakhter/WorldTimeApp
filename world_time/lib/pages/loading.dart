@@ -21,9 +21,9 @@ class _LoadingState extends State<Loading> {
     await service.getTime();
     setState(() {
       hasTime = true;
-      DateTime? fetchedTime = service.time;
-      text =
-          fetchedTime == null ? "Could not fetch time" : fetchedTime.toString();
+      text = service.time == null
+          ? "Could not fetch time"
+          : service.time.toString();
     });
 
     // 2 secs delay
@@ -32,7 +32,7 @@ class _LoadingState extends State<Loading> {
     Navigator.pushReplacementNamed(context, "/home", arguments: {
       "location": service.location,
       "flag": service.flag,
-      "time": service.time
+      "time": service.time ?? 'n/a'
     });
   }
 

@@ -1,11 +1,12 @@
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class WorldTimeService {
   String location;
   String flag;
   String url;
-  late DateTime? time;
+  late String? time;
 
   WorldTimeService(this.location, this.flag, this.url);
 
@@ -19,7 +20,8 @@ class WorldTimeService {
       String offsetString = data['utc_offset'].toString().substring(1, 3);
 
       DateTime now = DateTime.parse(dateTimeString);
-      time = now.add(Duration(hours: int.parse(offsetString)));
+      now = now.add(Duration(hours: int.parse(offsetString)));
+      time = DateFormat.jm().format(now);
     } catch (error) {
       print(error);
       time = null;
