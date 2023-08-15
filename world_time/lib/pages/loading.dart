@@ -13,6 +13,9 @@ class _LoadingState extends State<Loading> {
   String text = "Loading...";
 
   setupWorldTimeService() async {
+    // 2 secs delay
+    await Future.delayed(const Duration(seconds: 2));
+
     WorldTimeService service =
         WorldTimeService("Portugal", "portugal.png", "/Europe/Lisbon");
     await service.getTime();
@@ -22,6 +25,9 @@ class _LoadingState extends State<Loading> {
       text =
           fetchedTime == null ? "Could not fetch time" : fetchedTime.toString();
     });
+
+    // 2 secs delay
+    await Future.delayed(const Duration(seconds: 2));
 
     Navigator.pushReplacementNamed(context, "/home", arguments: {
       "location": service.location,
