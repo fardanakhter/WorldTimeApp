@@ -9,7 +9,7 @@ class WorldTimeService {
   late bool isDayTime = false;
   late String? time;
 
-  WorldTimeService(this.location, this.flag, this.url);
+  WorldTimeService(this.url, this.location, this.flag);
 
   Future<void> getTime() async {
     try {
