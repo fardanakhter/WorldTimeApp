@@ -23,7 +23,6 @@ class WorldTimeService {
       now = now.add(Duration(hours: int.parse(offsetString)));
       time = DateFormat.jm().format(now);
     } catch (error) {
-      print(error);
       time = null;
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:world_time/service/world_time_service.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -9,7 +10,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  bool hasTime = false;
   String text = "Loading...";
 
   setupWorldTimeService() async {
@@ -20,7 +20,6 @@ class _LoadingState extends State<Loading> {
         WorldTimeService("Portugal", "portugal.png", "/Europe/Lisbon");
     await service.getTime();
     setState(() {
-      hasTime = true;
       text = service.time == null
           ? "Could not fetch time"
           : service.time.toString();
@@ -44,15 +43,9 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.blue[600],
-      child: Center(
-          child: Text(text,
-              style: TextStyle(
-                  color: hasTime ? Colors.amber[100] : Colors.white,
-                  fontSize: 18.0,
-                  letterSpacing: hasTime ? 2.0 : 4.0,
-                  fontWeight: FontWeight.w500))),
-    );
+    return Scaffold(
+        backgroundColor: Colors.blue[600],
+        body: const Center(
+            child: SpinKitFadingCube(color: Colors.white, size: 50.0)));
   }
 }
