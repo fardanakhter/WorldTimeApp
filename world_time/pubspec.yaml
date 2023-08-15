@@ -22,5 +22,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/day.png
-    - assets/night.png
+    - assets/
