@@ -17,8 +17,20 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTimeService('America/Chicago', 'Chicago', 'usa.png'),
     WorldTimeService('America/New_York', 'New York', 'usa.png'),
     WorldTimeService('Asia/Seoul', 'Seoul', 'south_korea.png'),
-    WorldTimeService('Asia/Jakarta', 'Jakarta', 'indonesia.png')
+    WorldTimeService('Asia/Jakarta', 'Jakarta', 'indonesia.png'),
+    WorldTimeService('Asia/Karachi', 'Pakistan', 'pakistan.png'),
   ];
+
+  Future<Map> updateLocation(int index) async {
+    WorldTimeService service = locations[index];
+    await service.getTime();
+    return {
+      "location": service.location,
+      "flag": service.flag,
+      "time": service.time ?? 'n/a',
+      "isDayTime": service.isDayTime
+    };
+  }
 
   @override
   void initState() {
@@ -43,6 +55,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
               child: ListTile(
                   onTap: () {
                     print(locations[index].location);
+                    Future<Map> newLocation = updateLocation(index);
+                    Navigator.pop(context, newLocation);
                   },
                   title: Text(locations[index].location),
                   leading: CircleAvatar(

@@ -17,7 +17,7 @@ class _LoadingState extends State<Loading> {
     await Future.delayed(const Duration(seconds: 2));
 
     WorldTimeService service =
-        WorldTimeService("/Europe/Lisbon", "Portugal", "portugal.png");
+        WorldTimeService("Europe/Lisbon", "Portugal", "portugal.png");
     await service.getTime();
     setState(() {
       text = service.time == null

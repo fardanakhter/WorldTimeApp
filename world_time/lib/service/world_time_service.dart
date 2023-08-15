@@ -13,16 +13,16 @@ class WorldTimeService {
 
   Future<void> getTime() async {
     try {
-      var api = Uri.http('worldtimeapi.org', '/api/timezone$url');
+      var api = Uri.http('worldtimeapi.org', '/api/timezone/$url');
       Response response = await get(api);
 
       Map data = jsonDecode(response.body);
       String dateTimeString = data['utc_datetime'];
-      String offsetString = data['utc_offset'].toString().substring(1, 3);
+      String offsetString = data['utc_offset'].toString().substring(0, 3);
 
       DateTime now = DateTime.parse(dateTimeString);
       now = now.add(Duration(hours: int.parse(offsetString)));
-      isDayTime = now.hour > 5 && now.hour < 7;
+      isDayTime = now.hour > 4 && now.hour < 21;
       time = DateFormat.jm().format(now);
     } catch (error) {
       time = null;
