@@ -6,6 +6,7 @@ class WorldTimeService {
   String location;
   String flag;
   String url;
+  late bool isDayTime = false;
   late String? time;
 
   WorldTimeService(this.location, this.flag, this.url);
@@ -21,6 +22,7 @@ class WorldTimeService {
 
       DateTime now = DateTime.parse(dateTimeString);
       now = now.add(Duration(hours: int.parse(offsetString)));
+      isDayTime = now.hour > 5 && now.hour < 7;
       time = DateFormat.jm().format(now);
     } catch (error) {
       time = null;

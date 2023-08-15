@@ -13,14 +13,21 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context)!.settings.arguments as Map;
+    String backgroundImage =
+        (data["isDayTime"] as bool) ? "day.png" : "night.png";
     print('Received data on Home is: $data');
 
     return Scaffold(
-        body: SafeArea(
+        body: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/$backgroundImage"), fit: BoxFit.cover),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton.icon(
+              style: TextButton.styleFrom(foregroundColor: Colors.white),
               onPressed: () {
                 Navigator.pushNamed(context, "/location");
               },
@@ -34,7 +41,7 @@ class _HomeState extends State<Home> {
                 data['location'],
                 style: const TextStyle(
                     fontSize: 32.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 2.0),
               )
@@ -48,7 +55,7 @@ class _HomeState extends State<Home> {
                 data['time'],
                 style: const TextStyle(
                     fontSize: 66.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.w300),
               )
             ],
